@@ -2,35 +2,38 @@ package com.tienda.tienda.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 
 @Data //Especificar que es una capa de datos
 @Entity //Esta clase esta enlazada a una tabla en la base de datos
-@Table(name = "categoria") //Especificar cual entidad
+@Table(name = "producto") //Especificar cual entidad
 
-public class Categoria implements Serializable {
+public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L; //Autoincremento en Java (Auto_Increment PrimaryKey)  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria")
-    private Long idCategoria;
+    @Column(name = "id_producto")
+    private Long idProducto;
+    private String detalle;
+    private int existencias;
+    private double precio;
     private String descripcion;
     private String rutaImagen;
     private boolean activo;
 
-    @OneToMany
-    @JoinColumn(name = "id_categoria", updatable = false)
-    List<Producto> productos;
+    //private Long idCategoria;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    Categoria categoria;
 
-    public Categoria() {
+    public Producto() {
 
     }
 
-    public Categoria(String categoria, boolean activo) {
+    public Producto(String producto, boolean activo) {
 
-        this.descripcion = categoria;
+        this.descripcion = producto;
 
         this.activo = activo;
     }
